@@ -1,11 +1,13 @@
 package com.example.btviewbinding
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.btviewbinding.databinding.ActivityMainBinding
+import com.example.btviewbinding.utils.gone
+import com.example.btviewbinding.utils.show
+import com.example.btviewbinding.utils.toAcademicRanking
+import com.example.btviewbinding.utils.toast
+import com.example.btviewbinding.utils.trimmedText
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,51 +16,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding = ActivityMainBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-        }
-
-
-        with(binding) {
-            tvMessage.text = "Chào mừng bạn đến với Android Kotlin!"
-            btnSubmit.text = "Gửi thông tin"
-            edtInputName.hint = "Mời bạn nhập họ tên tại đây..."
-        }
+        toast("Chào mừng bạn tới ứng dụng!")
 
         binding.btnSubmit.setOnClickListener {
-            handleFormSubmission()
-        }
-    }
+            val inputName = binding.edtInputName.trimmedText()
 
-    private fun handleFormSubmission() {
+            if (inputName.isNotEmpty()) {
+                binding.tvMessage.text = "Xin chào, $inputName!"
 
-        val inputName = binding.edtInputName.text?.toString()?.trim()
-
-
-        inputName?.takeIf { it.isNotEmpty() }?.let { validName ->
+                val sampleGpa = 4.0
+                binding.tvMessage.append("\nHọc lực mô phỏng: ${sampleGpa.toAcademicRanking()}")
 
 
-            with(binding) {
-                tvMessage.text = "Xin chào, $validName!"
-                edtInputName.text.clear()
+                binding.edtInputName.gone()
+                binding.btnSubmit.gone()
+            } else {
+                toast("Vui lòng nhập họ tên!")
             }
-
-
-            validName.also { name ->
-                Log.d("USER_LOG", "Người dùng đã nhập tên thành công: $name")
-            }.also { name ->
-                showToast("Đã ghi nhận tên: $name")
-            }
-
-        } ?: run {
-
-            showToast("Vui lòng nhập tên trước khi bấm nút!")
         }
-    }
-
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
