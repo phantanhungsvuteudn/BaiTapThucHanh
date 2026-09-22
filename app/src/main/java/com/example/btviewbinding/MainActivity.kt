@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Hàm hiển thị Toast hỗ trợ rút gọn mã nguồn
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
