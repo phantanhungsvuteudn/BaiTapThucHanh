@@ -1,4 +1,4 @@
-package com.example.btviewbinding
+package com.example.studentprofile
 
 import org.junit.Test
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BtViewBinding</string>
+    <string name="avatar_desc">Ảnh đại diện sinh viên</string>
 </resources>
